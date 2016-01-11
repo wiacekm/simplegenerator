@@ -18,13 +18,13 @@ Usage Example:
 
 .. code-block:: python
 
-    from simplegenerator import SimpleGenerator, PatternGenerator
+    from simplegenerator import SimpleGenerator, PGenerator
 
     generator = SimpleGenerator(10, with_brackets=True)
     password = generator.build()
     passowrd2 = generator.build(15)
 
-    pgenerator = PatternGenerator("[a-zA-Z0-9]{5-15}")
+    pgenerator = PGenerator("[a-zA-Z0-9]{5-15}")
 
     passowrd3 - pgenerator.build()
 
