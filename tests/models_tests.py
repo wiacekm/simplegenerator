@@ -3,7 +3,7 @@
 import unittest
 import tempfile
 from simplegenerator import models
-from simplegenerator import hashing
+from simplegenerator import keys
 
 
 class ModelsTest(unittest.TestCase):
@@ -22,7 +22,7 @@ class ModelsTest(unittest.TestCase):
     def model_with_rsakey_test(self):
         class MyModel(models.ModelBasedGenerator):
             test = models.Field("[a]")
-            key = hashing.RSAKey()
+            key = keys.RSAKey()
 
         model = MyModel()
         result = model.generate()

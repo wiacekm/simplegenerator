@@ -16,6 +16,8 @@ class PGeneratorTest(unittest.TestCase):
         self.assertTrue('private' in rsa_dict)
         self.assertTrue('public' in rsa_dict)
         self.assertTrue('password' in rsa_dict)
+        self.assertTrue('BEGIN RSA PRIVATE KEY' in rsa_dict['private'])
+        self.assertTrue('BEGIN PUBLIC KEY' in rsa_dict['public'])
         self.assertEqual(rsa_dict['password'], None)
         self.assertEqual(len(rsa_dict), 3)
 
@@ -24,13 +26,15 @@ class PGeneratorTest(unittest.TestCase):
         ecdsa_dict = ecdsa.generate()
         self.assertTrue('private' in ecdsa_dict)
         self.assertTrue('public' in ecdsa_dict)
+        self.assertTrue('BEGIN EC PRIVATE KEY' in ecdsa_dict['private'])
+        self.assertTrue('BEGIN PUBLIC KEY' in ecdsa_dict['public'])
         self.assertEqual(len(ecdsa_dict), 2)
 
     def rsakey_with_password_test(self):
         rsa = RSAKey(password='abc')
         rsa_dict = rsa.generate()
         self.assertTrue('BEGIN RSA PRIVATE KEY' in rsa_dict['private'])
-        self.assertTrue('BEGIN RSA PUBLIC KEY' in rsa_dict['public'])
+        self.assertTrue('BEGIN PUBLIC KEY' in rsa_dict['public'])
         self.assertEqual(rsa_dict['password'], 'abc')
         self.assertEqual(len(rsa_dict), 3)
 
