@@ -5,15 +5,20 @@ try:
 except ImportError:
     from distutils.core import setup
 
-REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
+requirements = ['click==6.2',
+                'pyparsing==2.0.7',
+                'ecdsa==0.13',
+                'PyYAML==3.11',
+                'pycrypto==2.6.1',
+                ]
 
 config = {
-    'name': 'StringGenerator',
+    'name': 'SimpleGenerator',
     'description': 'Simple string (password) generator script',
     'author': 'Michal Wiacek',
     'author_email': 'michal.wiacek@gmail.com',
     'version': '0.1',
-    'install_requires': REQUIREMENTS,
+    'install_requires': requirements,
     'packages': ['simplegenerator'],
     'entry_points': {
         "console_scripts": [

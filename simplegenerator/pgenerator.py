@@ -8,7 +8,7 @@ Example:
     This are some examples of how it can be used::
 
         $ pgen = PGenerator("[a-zA-Z0-9]{3-5}")
-        $ result = pgen.build()
+        $ result = pgen.generate()
 
     Supports:
      - {n} and {m,n} repetition, but not unbounded + or * repetition
@@ -32,7 +32,8 @@ from pyparsing import (Literal, oneOf, printables, ParserElement, Combine,
                        SkipTo, operatorPrecedence, ParseFatalException,
                        Word, nums, opAssoc,
                        Suppress, srange)
-from generator import InvalidGeneratorValueError
+from .abstract import AbstractGenerator
+from .generator import InvalidGeneratorValueError
 
 
 __all__ = ['PGenerator', 'parser', 'Randomizer']
@@ -98,7 +99,8 @@ class CharSetRandomizer(object):
     This class is used to generate random charset based on provided:
      - chars
      - repetition range
-    By default only one character will be generated what can be modified with additional methods
+    By default only one character will be generated
+    what can be modified with additional methods
 
     Args:
         chars (List[str]): lower boundary of range
@@ -257,7 +259,7 @@ def parser():
     return _parser
 
 
-class PGenerator(object):
+class PGenerator(AbstractGenerator):
     """Regex-like Pattern Generator
 
     This generator uses regex-like patterns to generate random string
@@ -274,7 +276,12 @@ class PGenerator(object):
         self._pattern = pattern
         self._parser = parser()
 
-    def generate(self):
+    def __str__(self):
+        return "pattern: %s\n" % (self._pattern)
+
+    __repr__ = __str__
+
+    def igenerate(self):
         """random characters generator
 
         Yields:
@@ -283,10 +290,10 @@ class PGenerator(object):
         for c in Randomizer(self._parser.parseString(self._pattern)).generate():
             yield c
 
-    def build(self):
-        """build random string
+    def generate(self):
+        """generate random string
 
         Returns:
             generated string
         """
-        return ''.join([c for c in self.generate()])
+        return ''.join([c for c in self.igenerate()])

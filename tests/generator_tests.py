@@ -13,7 +13,7 @@ class GeneratorTest(unittest.TestCase):
 
     def empty_pattern_test(self):
         test_generator = SimpleGenerator(5)
-        result = test_generator.build()
+        result = test_generator.generate()
         self.assertEqual(len(result), 5)
         self.assertRegexpMatches(result, self.alphanum_pattern)
 
