@@ -3,23 +3,22 @@ Simple (Password) Generator
 .. image:: http://img.shields.io/travis/michalwiacek/simplegenerator.svg?branch=master
     :target: https://travis-ci.org/michalwiacek/simplegenerator.svg?branch=master
     :alt: Build status
-
 .. image:: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
     :target: http://mit-license.org/
     :alt: License
 
 This is ver simple python tool to generate strings ex. for passwords.
 There are three possible options:
+
 1. Build random string based on characters groups
 2. Build random string based on regex-like patterns.Supported special characters:
-
-    * `\` - escaping other special characters ex. `\\`, `\[`
-    * `\d` - digits
-    * `\w` - expands to a-zA-Z0-9
-    * `[]` - brackets for literal or sequences
-    * `-` - used for sequences like A-Z, a-z, 0-9
-    * `{n}` - repeat n-times
-    * `{n,m}` - repeat n to m times. random number between n and m
+    * ``\`` - escaping other special characters ex. ``\\``, ``\[``
+    * ``\d`` - digits
+    * ``\w`` - expands to ``a-zA-Z0-9``
+    * ``[]`` - brackets for literal or sequences
+    * ``-`` - used for sequences like ``A-Z``, ``a-z``, ``0-9``
+    * ``{n}`` - repeat n-times
+    * ``{n,m}`` - repeat n to m times. random number between n and m
 3. Generate Encryption keys:
     * RSA
     * ECDSA
@@ -45,7 +44,6 @@ Usage Examples
     passowrd3 - pgenerator.build()
 
 
-
 Commandline scripts
 ===================
 This tools provides also command line interface
@@ -58,4 +56,4 @@ This tools provides also command line interface
 License
 =======
 
-|simplegenerator| is licensed under `MIT license <http://mit-license.org/>`_.
+``simplegenerator`` is licensed under `MIT license <http://mit-license.org/>`_.

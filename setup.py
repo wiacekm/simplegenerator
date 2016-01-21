@@ -27,7 +27,7 @@ config = {
             "pgen = simplegenerator.__main__:cli",
         ]
     },
-    classifiers=[
+    'classifiers': [
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
