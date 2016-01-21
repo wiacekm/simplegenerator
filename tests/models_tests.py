@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import unittest
-import tempfile
+import mock
 from simplegenerator import models
 from simplegenerator import keys
 
@@ -34,21 +34,24 @@ class ModelsTest(unittest.TestCase):
         self.assertTrue('public' in result['key'])
         self.assertTrue('password' in result['key'])
 
-    def model_definition_from_yaml_file(self):
-        model_definition = """---
-a: 
-    type: Field
-    args: 
-        pattern: '[a-z]{2}'
-b:
-    type: Model
-    args:
-        d: 
-            type: Field
-            args: 
-                pattern: '[a-z]{2}'
-"""
-        model = models.ModelBasedGenerator.load(file_name)
+    def model_definition_from_yaml_file_test(self):
+        model_definition = ["---",
+                            "a:",
+                            "    type: Field",
+                            "    args:",
+                            "        pattern: '[a-z]{2}'",
+                            "b:",
+                            "    type: Model",
+                            "    args:",
+                            "        d:",
+                            "            type: Field",
+                            "            args:",
+                            "                pattern: '[a-z]{2}'",
+                            ]
+
+        m = mock.mock_open(read_data='\n'.join(model_definition))
+        with mock.patch('simplegenerator.models.open', m):
+            model = models.ModelBasedGenerator.load('test.yml')
         result = model.generate()
         self.assertEqual(type(result), dict)
         self.assertRegexpMatches(result['a'], '[a-z]{2}')

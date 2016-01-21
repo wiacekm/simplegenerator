@@ -16,6 +16,7 @@ pgenerate::
 
 """
 import generator
+import models
 import pgenerator
 import click
 
@@ -74,7 +75,7 @@ def cli2():
               help="Use special_characters (%s) in string" % generator.special_characters)
 @click.option("--with-brackets/--without-brackets", is_flag=True, default=False,
               help="Use brackets (%s) in string" % generator.brackets)
-@click.option('--format', type=click.Choice(['json', 'yamls']), default=None)
+@click.option('--format', type=click.Choice(['json', 'yaml']), default=None)
 def simple(length, with_lower, with_upper, with_numbers,
            with_space, with_underscore, with_minus,
            with_special_characters,
@@ -116,7 +117,30 @@ def simple(length, with_lower, with_upper, with_numbers,
     click.echo(simple_gen.serialize(format))
 
 
-cli = click.CommandCollection(sources=[cli1, cli2])
+@click.group()
+def cli3():
+    pass
+
+
+@cli3.command()
+@click.option("--file", default='model.yml', help="YAML file with model definition")
+@click.option('--format', type=click.Choice(['json', 'yaml']), default=None)
+def model(file, format):
+    """Model bases generator.
+
+    This one is using models defined in yaml files to generate data
+
+    Args:
+        file (str): YAML file with model definition
+        format (Optional[str]): type of format in which data should be returned
+            Defaults to 'yaml'. Available choices: yaml, json
+
+    """
+    models_gen = models.ModelBasedGenerator.load(file)
+    click.echo(models_gen.serialize(format))
+
+
+cli = click.CommandCollection(sources=[cli1, cli2, cli3])
 
 
 if __name__ == "__main__":

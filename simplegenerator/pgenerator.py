@@ -32,8 +32,8 @@ from pyparsing import (Literal, oneOf, printables, ParserElement, Combine,
                        SkipTo, operatorPrecedence, ParseFatalException,
                        Word, nums, opAssoc,
                        Suppress, srange)
-from .abstract import AbstractGenerator
-from .generator import InvalidGeneratorValueError
+from abstract import AbstractGenerator
+from generator import InvalidGeneratorValueError
 
 
 __all__ = ['PGenerator', 'parser', 'Randomizer']

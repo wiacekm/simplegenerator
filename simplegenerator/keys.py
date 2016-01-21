@@ -8,7 +8,7 @@ It is based on python mosules that are already avaialble
 import os
 from Crypto.PublicKey import RSA
 import ecdsa
-from .abstract import AbstractGenerator
+from abstract import AbstractGenerator
 
 
 class RSAKey(AbstractGenerator):

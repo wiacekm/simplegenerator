@@ -18,8 +18,9 @@ Example:
 
 """
 import yaml
-from .abstract import AbstractGenerator
-from .pgenerator import PGenerator
+from abstract import AbstractGenerator
+from pgenerator import PGenerator
+from keys import (RSAKey, ECDSAKey)
 
 __all__ = ['ModelBasedGenerator', 'Field']
 
@@ -75,17 +76,46 @@ class ModelBasedGenerator(AbstractGenerator):
         return {field: getattr(self, field).generate() for field in self._fields}
 
     @classmethod
-    def _extract(cls, kwargs):
+    def extract(cls, kwargs):
+        """Use dictionary like serialized objects to generate models.
+
+        Args:
+            kwargs (dict): model in format of dictionary
+                Dictionary like this:
+                    $ model = {'user': {'type': 'Field',
+                                         'args': { pattern: '[a-z]{2}'},
+                              },
+                Is equivalent to:
+                    $ class ExampleModel(ModelBasedGenerator):
+                    $     user = Field('[a-z]{2}')
+        Returns:
+            ModelBasedGenerator-like object.
+        """
+
         params = {}
         for name, value in kwargs.iteritems():
             if value['type'] == 'Model':
-                params[name] = cls._extract(value['args'])
+                params[name] = cls.extract(value['args'])
             else:
-                params[name] = eval(value['type'])(**value['args'])
+                params[name] = eval(value['type'])(**value.get('args', {}))
         return ModelBasedGenerator(**params)
 
     @classmethod
     def load(cls, file_name):
+        """Load models for YAML definiction file.
+
+        Example file content should look like this:
+
+            $ user:
+            $     type: Field
+            $     args:
+            $         pattern: '[a-z]{2}'
+
+        Args:
+            file_name (str): file name with YAML model
+        Returns:
+            ModelBasedGenerator-like object.
+        """
         with open(file_name, 'r') as fp:
             model = yaml.load(fp)
-        return cls._extract(model)
+        return cls.extract(model)

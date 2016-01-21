@@ -1,0 +1,14 @@
+---
+user:
+    type: Field
+    args:
+        pattern: '[a-z]{2}'
+credentials:
+    type: Model
+    args:
+        password:
+            type: Field
+            args:
+                pattern: '[a-z]{2}'
+        keys:
+            type: RSAKey

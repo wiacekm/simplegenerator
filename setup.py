@@ -11,6 +11,8 @@ requirements = ['click==6.2',
                 'PyYAML==3.11',
                 'pycrypto==2.6.1',
                 ]
+requirements = [i.strip() for i in open("requirements.txt").readlines()]
+
 
 config = {
     'name': 'SimpleGenerator',
@@ -24,7 +26,12 @@ config = {
         "console_scripts": [
             "pgen = simplegenerator.__main__:cli",
         ]
-    }
+    },
+    classifiers=[
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+    ],
 }
 
 setup(**config)

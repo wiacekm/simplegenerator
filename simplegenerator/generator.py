@@ -19,7 +19,7 @@ Example:
 import random
 import string
 
-from .abstract import AbstractGenerator
+from abstract import AbstractGenerator
 
 __all__ = ['alpha_lower', 'alpha_upper', 'numbers', 'space', 'underscore',
            'minus', 'special_characters', 'brackets',
