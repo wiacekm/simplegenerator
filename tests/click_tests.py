@@ -11,6 +11,16 @@ class CliGeneratorTests(unittest.TestCase):
     def setUp(self):
         self.runner = CliRunner()
 
+    def no_subcommand_cli_test(self):
+        result = self.runner.invoke(cli)
+        self.assertEqual(result.exit_code, 0)
+        self.assertRegexpMatches(result.output,
+                                 'model    Model bases generator.')
+        self.assertRegexpMatches(result.output,
+                                 'pattern  RegExp-like pattern string generator.')
+        self.assertRegexpMatches(result.output,
+                                 'simple   Simple string generator.')
+
     def simple_generator_cli_test(self):
         result = self.runner.invoke(cli, ['simple'])
         self.assertEqual(result.exit_code, 0)

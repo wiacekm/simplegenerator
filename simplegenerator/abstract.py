@@ -8,7 +8,6 @@ class AbstractGenerator(object):
     """Abstract Generator class"""
 
     def __init__(self):
-        print AbstractGenerator
         raise NotImplementedError("Cannot initalize abstract class")
 
     def generate(self):

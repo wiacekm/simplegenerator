@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import unittest
-from simplegenerator import SimpleGenerator
-from simplegenerator import InvalidGeneratorValueError
+from simplegenerator import (alpha_lower, alpha_upper, numbers, space, underscore,
+                             minus, special_characters, brackets,
+                             SimpleGenerator,
+                             )
 
 
 class GeneratorTest(unittest.TestCase):
@@ -18,9 +20,31 @@ class GeneratorTest(unittest.TestCase):
         self.assertRegexpMatches(result, self.alphanum_pattern)
 
     def none_character_group_selected_test(self):
-        with self.assertRaises(InvalidGeneratorValueError):
+        with self.assertRaises(ValueError):
             SimpleGenerator(5, with_lower=False, with_upper=False,
                             withnumbers=False, withspace=False,
                             withunderscore=False, withminus=False,
                             withspecial_characters=False,
                             withbrackets=False)
+
+    def zero_lengtht_string_test(self):
+        with self.assertRaises(ValueError):
+            SimpleGenerator(0, with_lower=True, with_upper=True,
+                            withnumbers=True, withspace=True,
+                            withunderscore=True, withminus=True,
+                            withspecial_characters=True,
+                            withbrackets=True)
+
+    def all_groups_selected_test(self):
+        test_generator = SimpleGenerator(1, with_lower=True, with_upper=True,
+                                         withnumbers=True, withspace=True,
+                                         withunderscore=True, withminus=True,
+                                         withspecial_characters=True,
+                                         withbrackets=True)
+        result = test_generator.generate()
+        self.assertEqual(len(result), 1)
+        expected_pattern = ''.join([alpha_lower, alpha_upper,
+                                    numbers, space, underscore, minus,
+                                    special_characters, brackets
+                                    ])
+        self.assertTrue(result in expected_pattern)

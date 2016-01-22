@@ -33,7 +33,6 @@ from pyparsing import (Literal, oneOf, printables, ParserElement, Combine,
                        Word, nums, opAssoc,
                        Suppress, srange)
 from abstract import AbstractGenerator
-from generator import InvalidGeneratorValueError
 
 
 __all__ = ['PGenerator', 'parser', 'Randomizer']
@@ -272,7 +271,7 @@ class PGenerator(AbstractGenerator):
 
     def __init__(self, pattern):
         if not pattern:
-            raise InvalidGeneratorValueError("Pattern cannot be empty")
+            raise ValueError("Pattern cannot be empty")
         self._pattern = pattern
         self._parser = parser()
 

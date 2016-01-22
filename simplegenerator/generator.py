@@ -24,7 +24,6 @@ from abstract import AbstractGenerator
 __all__ = ['alpha_lower', 'alpha_upper', 'numbers', 'space', 'underscore',
            'minus', 'special_characters', 'brackets',
            'BaseGenerator', 'SimpleGenerator',
-           'CompilationError', 'InvalidGeneratorValueError'
            ]
 
 alpha_lower = string.ascii_lowercase
@@ -104,9 +103,9 @@ class SimpleGenerator(BaseGenerator):
         if not any([with_lower, with_upper, withnumbers, withspace,
                     withunderscore, withminus,
                     withspecial_characters, withbrackets]):
-            raise InvalidGeneratorValueError("at least one group should be selected")
+            raise ValueError("at least one group should be selected")
         if not length > 0:
-            raise InvalidGeneratorValueError("length should be greater than zero")
+            raise ValueError("length should be greater than zero")
 
         selectable_characters = []
         if with_lower:
@@ -127,13 +126,3 @@ class SimpleGenerator(BaseGenerator):
             selectable_characters.extend(list(brackets))
         random.shuffle(selectable_characters)
         super(SimpleGenerator, self).__init__(length, selectable_characters)
-
-
-class CompilationError(ValueError):
-    """This exception should be raised when Pattern is invalid"""
-    pass
-
-
-class InvalidGeneratorValueError(ValueError):
-    """This exception should be raised when generator values are invalid"""
-    pass
