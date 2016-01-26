@@ -5,12 +5,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-requirements = ['click==6.2',
-                'pyparsing==2.0.7',
-                'ecdsa==0.13',
-                'PyYAML==3.11',
-                'pycrypto==2.6.1',
-                ]
+
 requirements = [i.strip() for i in open("requirements.txt").readlines()]
 
 
