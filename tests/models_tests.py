@@ -13,7 +13,7 @@ class ModelsTest(unittest.TestCase):
 
     def simple_model_generator_test(self):
         class MyModel(models.ModelBasedGenerator):
-            test = models.Field("[a]")
+            test = models.ReGenerator("[a]")
 
         model = MyModel()
         result = model.generate()
@@ -21,7 +21,7 @@ class ModelsTest(unittest.TestCase):
 
     def model_with_rsakey_test(self):
         class MyModel(models.ModelBasedGenerator):
-            test = models.Field("[a]")
+            test = models.ReGenerator("[a]")
             key = keys.RSAKey()
 
         model = MyModel()
@@ -37,14 +37,14 @@ class ModelsTest(unittest.TestCase):
     def model_definition_from_yaml_file_test(self):
         model_definition = ["---",
                             "a:",
-                            "    type: Field",
+                            "    type: ReGenerator",
                             "    args:",
                             "        pattern: '[a-z]{2}'",
                             "b:",
                             "    type: Model",
                             "    args:",
                             "        d:",
-                            "            type: Field",
+                            "            type: ReGenerator",
                             "            args:",
                             "                pattern: '[a-z]{2}'",
                             ]

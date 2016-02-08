@@ -11,6 +11,9 @@ import ecdsa
 from abstract import AbstractGenerator
 
 
+__all__ = ['RSAKey', 'ECDSAKey']
+
+
 class RSAKey(AbstractGenerator):
     """RSA Key generation class.
 

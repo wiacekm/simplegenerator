@@ -17,7 +17,7 @@ pgenerate::
 """
 import generator
 import models
-import pgenerator
+import regenerator
 import click
 
 
@@ -30,7 +30,7 @@ def cli1():
 @click.option("--pattern", default="[A-Ba-z0-9]{10,15}",
               help="Pattern for string created. Supports regexp limited syntax")
 @click.option('--format', type=click.Choice(['json', 'yaml']), default=None)
-def pattern(pattern, format):
+def regex(pattern, format):
     """RegExp-like pattern string generator.
 
     Supports regexp-like syntax.
@@ -47,8 +47,8 @@ def pattern(pattern, format):
             Defaults to 'yaml'. Available choices: yaml, json
 
     """
-    pattern_gen = pgenerator.PGenerator(pattern)
-    click.echo(pattern_gen.serialize(format))
+    re_gen = regenerator.ReGenerator(pattern)
+    click.echo(re_gen.serialize(format))
 
 
 @click.group()

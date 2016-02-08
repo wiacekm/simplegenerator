@@ -19,12 +19,10 @@ Example:
 """
 import yaml
 from abstract import AbstractGenerator
-from pgenerator import PGenerator
+from regenerator import ReGenerator
 from keys import (RSAKey, ECDSAKey)
 
-__all__ = ['ModelBasedGenerator', 'Field']
-
-Field = PGenerator
+__all__ = ['ModelBasedGenerator']
 
 
 class ModelMeta(type):
@@ -49,7 +47,7 @@ class ModelBasedGenerator(AbstractGenerator):
     Example:
 
         $ class MyModel(ModelBasedGenerator):
-        $     name = Field("[a-z]{3}")
+        $     name = ReGenerator("[a-z]{3}")
         $ data = MyModel().generate()
         $ class MyNestedModel(ModelBasedGenerator):
         $     name = MyModel()
@@ -82,12 +80,12 @@ class ModelBasedGenerator(AbstractGenerator):
         Args:
             kwargs (dict): model in format of dictionary
                 Dictionary like this:
-                    $ model = {'user': {'type': 'Field',
+                    $ model = {'user': {'type': 'ReGenerator',
                                          'args': { pattern: '[a-z]{2}'},
                               },
                 Is equivalent to:
                     $ class ExampleModel(ModelBasedGenerator):
-                    $     user = Field('[a-z]{2}')
+                    $     user = ReGenerator('[a-z]{2}')
         Returns:
             ModelBasedGenerator-like object.
         """
@@ -107,7 +105,7 @@ class ModelBasedGenerator(AbstractGenerator):
         Example file content should look like this:
 
             $ user:
-            $     type: Field
+            $     type: ReGenerator
             $     args:
             $         pattern: '[a-z]{2}'
 

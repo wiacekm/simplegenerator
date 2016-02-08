@@ -12,7 +12,6 @@ There are three possible options:
 
 1. Build random string based on characters groups
 #. Build random string based on regex-like patterns.Supported special characters:
-
     +-----------+------------------------------------------+----------------------------+ 
     | Character | Description                              | Example                    | 
     +===========+==========================================+============================+ 
@@ -39,7 +38,6 @@ There are three possible options:
     +-----------+------------------------------------------+----------------------------+ 
 
 #. Generate Encryption keys:
-
     * RSA
     * ECDSA
 
@@ -60,23 +58,23 @@ Usage Examples
     result1 = generator.generate()
     result2 = generator.generate(15)
 
-#. Pattern Generator:
+#. RegEx-like Generator:
 
 .. code-block:: python
 
-    from simplegenerator import PGenerator
-    pgenerator = PGenerator("[a-zA-Z0-9]{5-15}")
+    from simplegenerator import ReGenerator
+    pgenerator = ReGenerator("[a-zA-Z0-9]{5-15}")
     result = pgenerator.generate()
 
 #. Model based Generator:
 
 .. code-block:: python
 
-    from simplegenerator import (ModelBasedGenerator, Field, 
+    from simplegenerator import (ModelBasedGenerator, ReGenerator, 
                                  RSAKey, PGenerator)
     
     class Model(ModelBasedGenerator):
-        user = Field('[a-zA-Z]{10}')
+        user = ReGenerator('[a-zA-Z]{10}')
         key = RSAKey(password=PGenerator('[a-zA-Z0-9]{15}')
     model_generator = Model()
     result = model_generator.generate()
@@ -86,7 +84,7 @@ Usage Examples
 .. code-block:: yaml
 
     user:
-        type: Field
+        type: ReGenerator
         args:
             pattern: '[a-z]{2}'
 
@@ -107,7 +105,7 @@ This tools provides also command line interface.
 .. code-block:: shell
 
     $ simplegenerator simple --length 10 --with-lower --with-upper --with-numbers
-    $ simplegenerator pattern --pattern [a-zA-Z0-9]{15}
+    $ simplegenerator regex --pattern [a-zA-Z0-9]{15}
     $ simplegenerator model --file model.yml
 
 Issues

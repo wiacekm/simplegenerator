@@ -7,8 +7,8 @@ It is based on python ``random`` package.
 Example:
     This are some examples of how it can be used::
 
-        $ pgen = PGenerator("[a-zA-Z0-9]{3-5}")
-        $ result = pgen.generate()
+        $ regen = ReGenerator("[a-zA-Z0-9]{3-5}")
+        $ result = regen.generate()
 
     Supports:
      - {n} and {m,n} repetition, but not unbounded + or * repetition
@@ -35,7 +35,7 @@ from pyparsing import (Literal, oneOf, printables, ParserElement, Combine,
 from abstract import AbstractGenerator
 
 
-__all__ = ['PGenerator', 'parser', 'Randomizer']
+__all__ = ['ReGenerator', 'parser', 'Randomizer']
 
 
 class Range(object):
@@ -258,7 +258,7 @@ def parser():
     return _parser
 
 
-class PGenerator(AbstractGenerator):
+class ReGenerator(AbstractGenerator):
     """Regex-like Pattern Generator
 
     This generator uses regex-like patterns to generate random string

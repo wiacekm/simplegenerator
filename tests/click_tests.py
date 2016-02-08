@@ -15,11 +15,11 @@ class CliGeneratorTests(unittest.TestCase):
         result = self.runner.invoke(cli)
         self.assertEqual(result.exit_code, 0)
         self.assertRegexpMatches(result.output,
-                                 'model    Model bases generator.')
+                                 'model   Model bases generator.')
         self.assertRegexpMatches(result.output,
-                                 'pattern  RegExp-like pattern string generator.')
+                                 'regex   RegExp-like pattern string generator.')
         self.assertRegexpMatches(result.output,
-                                 'simple   Simple string generator.')
+                                 'simple  Simple string generator.')
 
     def simple_generator_cli_test(self):
         result = self.runner.invoke(cli, ['simple'])
@@ -27,21 +27,21 @@ class CliGeneratorTests(unittest.TestCase):
         self.assertEqual(len(result.output), 10+1)  # plus one as new line is counted
 
     def pattern_generator_cli_test(self):
-        result = self.runner.invoke(cli, ['pattern', '--pattern', '[A-Za-z]{5}'])
+        result = self.runner.invoke(cli, ['regex', '--pattern', '[A-Za-z]{5}'])
         self.assertEqual(result.exit_code, 0)
         self.assertEqual(len(result.output), 5+1)  # plus one as new line is counted
 
     def model_definition_from_yaml_file_test(self):
         model_definition = ["---",
                             "a:",
-                            "    type: Field",
+                            "    type: ReGenerator",
                             "    args:",
                             "        pattern: '[a-z]{2}'",
                             "b:",
                             "    type: Model",
                             "    args:",
                             "        d:",
-                            "            type: Field",
+                            "            type: ReGenerator",
                             "            args:",
                             "                pattern: '[a-z]{2}'",
                             ]
