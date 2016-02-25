@@ -13,7 +13,7 @@ class ModelsTest(unittest.TestCase):
 
     def simple_model_generator_test(self):
         class MyModel(models.ModelBasedGenerator):
-            test = models.ReGenerator("[a]")
+            test = models.RegexField("[a]")
 
         model = MyModel()
         result = model.generate()
@@ -21,32 +21,36 @@ class ModelsTest(unittest.TestCase):
 
     def model_with_rsakey_test(self):
         class MyModel(models.ModelBasedGenerator):
-            test = models.ReGenerator("[a]")
+            test = models.RegexField("[a]")
             key = keys.RSAKey()
+            url = models.StringField('http://github.com')
 
         model = MyModel()
         result = model.generate()
-        print model
-        print result
         self.assertEqual(type(result), dict)
         self.assertEqual(type(result['key']), dict)
         self.assertTrue('private' in result['key'])
         self.assertTrue('public' in result['key'])
         self.assertTrue('password' in result['key'])
+        self.assertTrue('http://github.com' in result['url'])
 
     def model_definition_from_yaml_file_test(self):
         model_definition = ["---",
                             "a:",
-                            "    type: ReGenerator",
+                            "    type: RegexField",
                             "    args:",
                             "        pattern: '[a-z]{2}'",
                             "b:",
                             "    type: Model",
                             "    args:",
                             "        d:",
-                            "            type: ReGenerator",
+                            "            type: RegexField",
                             "            args:",
                             "                pattern: '[a-z]{2}'",
+                            "        url:",
+                            "            type: StringField",
+                            "            args:",
+                            "                value: 'http://github.com'",
                             ]
 
         m = mock.mock_open(read_data='\n'.join(model_definition))
@@ -57,3 +61,4 @@ class ModelsTest(unittest.TestCase):
         self.assertRegexpMatches(result['a'], '[a-z]{2}')
         self.assertEqual(type(result['b']), dict)
         self.assertRegexpMatches(result['b']['d'], '[a-z]{2}')
+        self.assertEqual(result['b']['url'], 'http://github.com')

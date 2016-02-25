@@ -12,30 +12,30 @@ There are three possible options:
 
 1. Build random string based on characters groups
 #. Build random string based on regex-like patterns.Supported special characters:
-    +-----------+------------------------------------------+----------------------------+ 
-    | Character | Description                              | Example                    | 
-    +===========+==========================================+============================+ 
-    | \{}()|-.  | Restricted meta-characters.              |                            | 
-    +-----------+------------------------------------------+----------------------------+ 
-    | \         | Backslash escapes a metacharacter.       | column 3                   | 
-    +-----------+------------------------------------------+----------------------------+ 
-    | \d        | Digits shorthand.                        | exapnded to 0-9            | 
-    +-----------+------------------------------------------+----------------------------+ 
-    | \w        | Number shorthand.                        | expanded to ``A-Za-z0-9_`` | 
-    +-----------+------------------------------------------+----------------------------+ 
-    | \s        | Space shorthand.                         | expanded to (space) only   | 
-    +-----------+------------------------------------------+----------------------------+ 
-    | []        | Nested characters class.                 | ``[Abc_]``                 | 
-    +-----------+------------------------------------------+----------------------------+ 
-    | -         | Characters range (between to chars).     | ``[a-z]``, ``[A-Za-z0-9]`` | 
-    +-----------+------------------------------------------+----------------------------+ 
-    | {n}       | Reapat (random character) n-times.       | {5}                        | 
-    +-----------+------------------------------------------+----------------------------+ 
+    +-----------+------------------------------------------+----------------------------+
+    | Character | Description                              | Example                    |
+    +===========+==========================================+============================+
+    | \{}()|-.  | Restricted meta-characters.              |                            |
+    +-----------+------------------------------------------+----------------------------+
+    | \         | Backslash escapes a metacharacter.       | column 3                   |
+    +-----------+------------------------------------------+----------------------------+
+    | \d        | Digits shorthand.                        | exapnded to 0-9            |
+    +-----------+------------------------------------------+----------------------------+
+    | \w        | Number shorthand.                        | expanded to ``A-Za-z0-9_`` |
+    +-----------+------------------------------------------+----------------------------+
+    | \s        | Space shorthand.                         | expanded to (space) only   |
+    +-----------+------------------------------------------+----------------------------+
+    | []        | Nested characters class.                 | ``[Abc_]``                 |
+    +-----------+------------------------------------------+----------------------------+
+    | -         | Characters range (between to chars).     | ``[a-z]``, ``[A-Za-z0-9]`` |
+    +-----------+------------------------------------------+----------------------------+
+    | {n}       | Reapat (random character) n-times.       | {5}                        |
+    +-----------+------------------------------------------+----------------------------+
     | {n,m}     | Repeat (random character) k-times,       |  {1,5}                     |
-    |           | where k is random number form n-m range. |                            | 
-    +-----------+------------------------------------------+----------------------------+ 
-    | (a|b)     | random element from group.               | (user|root)                | 
-    +-----------+------------------------------------------+----------------------------+ 
+    |           | where k is random number form n-m range. |                            |
+    +-----------+------------------------------------------+----------------------------+
+    | (a|b)     | random element from group.               | (user|root)                |
+    +-----------+------------------------------------------+----------------------------+
 
 #. Generate Encryption keys:
     * RSA
@@ -70,29 +70,31 @@ Usage Examples
 
 .. code-block:: python
 
-    from simplegenerator import (ModelBasedGenerator, ReGenerator, 
-                                 RSAKey, PGenerator)
-    
+    from simplegenerator import (ModelBasedGenerator, RegexField,
+                                 StringField, RSAKey)
+
     class Model(ModelBasedGenerator):
-        user = ReGenerator('[a-zA-Z]{10}')
+        user = RegexField('[a-zA-Z]{10}')
         key = RSAKey(password=PGenerator('[a-zA-Z0-9]{15}')
+        url = StringField('http://github.com/')
+
     model_generator = Model()
     result = model_generator.generate()
-    
+
 #. Model Load from YAML file:
 
 .. code-block:: yaml
 
     user:
-        type: ReGenerator
+        type: RegexField
         args:
             pattern: '[a-z]{2}'
 
-            
+
 .. code-block:: python
 
     from simplegenerator import ModelBasedGenerator
-    
+
     generator = ModelBasedGenerator.load('model.yml')
     result = generator.generate()
 
@@ -108,8 +110,3 @@ This tools provides also command line interface.
     $ simplegenerator regex --pattern [a-zA-Z0-9]{15}
     $ simplegenerator model --file model.yml
 
-Issues
-======
-
-1. Problem with handling comples patterns ex. ``([A-Z]{2}|[a-z]{2})``
-#. Problem with handling literals in patterns ex. ``michal[0-9]{3}``

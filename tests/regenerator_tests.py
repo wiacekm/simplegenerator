@@ -127,7 +127,7 @@ class ReGeneratorTest(unittest.TestCase):
         self.assertRegexpMatches(result, self.alternatives+'{2}')
         self.assertEqual(len(result), 2*3)
 
-    def alternative_from_characters_sequence(self):
+    def alternative_from_characters_sequence_test(self):
         test_pattern = '([A-Z]{2}|[a-z]{2}|\d{2})'
         test_gen = ReGenerator(test_pattern)
         result = test_gen.generate()
@@ -138,3 +138,18 @@ class ReGeneratorTest(unittest.TestCase):
         test_gen = ReGenerator(self.tabular_as_unsupported_character)
         with self.assertRaises(ParseFatalException):
             test_gen.generate()
+
+    def listerals_characters_test(self):
+        test_pattern = 'test_literal'
+        test_gen = ReGenerator(test_pattern)
+        result = test_gen.generate()
+        self.assertEqual(result, test_pattern)
+
+    def listerals_and_patterns_test(self):
+        test_literal = 'test_literal'
+        test_pattern = '[a-zA-Z0-9]{3}'
+        test_gen = ReGenerator(test_literal+test_pattern)
+        result = test_gen.generate()
+        self.assertEqual(len(result), 15)
+        self.assertEqual(result[:12], test_literal)
+        self.assertRegexpMatches(result[-3:], test_pattern)

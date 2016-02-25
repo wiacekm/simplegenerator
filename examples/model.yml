@@ -7,8 +7,12 @@ credentials:
     type: Model
     args:
         password:
-            type: Field
+            type: RegexField
             args:
                 pattern: '[a-z]{2}'
         keys:
             type: RSAKey
+        url:
+            type: StringField
+            args:
+                value: 'http://github.com

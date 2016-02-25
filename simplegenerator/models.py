@@ -22,7 +22,24 @@ from abstract import AbstractGenerator
 from regenerator import ReGenerator
 from keys import (RSAKey, ECDSAKey)
 
-__all__ = ['ModelBasedGenerator']
+__all__ = ['ModelBasedGenerator', 'RegexField', 'StringField']
+
+RegexField = ReGenerator
+
+
+class StringField(AbstractGenerator):
+    """Class that represent basic string field"""
+
+    def __init__(self, value):
+        self._value = value
+
+    def generate(self):
+        """generate method.
+
+        Returns:
+            return value
+        """
+        return self._value
 
 
 class ModelMeta(type):
@@ -47,7 +64,7 @@ class ModelBasedGenerator(AbstractGenerator):
     Example:
 
         $ class MyModel(ModelBasedGenerator):
-        $     name = ReGenerator("[a-z]{3}")
+        $     name = RegexField("[a-z]{3}")
         $ data = MyModel().generate()
         $ class MyNestedModel(ModelBasedGenerator):
         $     name = MyModel()
@@ -80,12 +97,12 @@ class ModelBasedGenerator(AbstractGenerator):
         Args:
             kwargs (dict): model in format of dictionary
                 Dictionary like this:
-                    $ model = {'user': {'type': 'ReGenerator',
+                    $ model = {'user': {'type': 'RegexField',
                                          'args': { pattern: '[a-z]{2}'},
                               },
                 Is equivalent to:
                     $ class ExampleModel(ModelBasedGenerator):
-                    $     user = ReGenerator('[a-z]{2}')
+                    $     user = RegexField('[a-z]{2}')
         Returns:
             ModelBasedGenerator-like object.
         """
@@ -105,7 +122,7 @@ class ModelBasedGenerator(AbstractGenerator):
         Example file content should look like this:
 
             $ user:
-            $     type: ReGenerator
+            $     type: RegexField
             $     args:
             $         pattern: '[a-z]{2}'
 

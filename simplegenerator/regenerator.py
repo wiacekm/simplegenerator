@@ -28,6 +28,7 @@ Example:
 
 """
 import random
+import types
 from pyparsing import (Literal, oneOf, printables, ParserElement, Combine,
                        SkipTo, operatorPrecedence, ParseFatalException,
                        Word, nums, opAssoc,
@@ -54,7 +55,7 @@ class Range(object):
         self._max = max
 
     @property
-    def generate(self):
+    def random(self):
         """get random vlaue from range"""
         if self._min == self._max:
             return self._min
@@ -107,19 +108,19 @@ class CharSetRandomizer(object):
 
     def __init__(self, chars):
         self._chars = chars
-        self._count = Range(1, 1)
+        self._size = Range(1, 1)
 
     def range(self, min, max):
         """set repetition range"""
-        self._count.min = min
-        self._count.max = max
+        self._size.min = min
+        self._size.max = max
 
     def count(self, count):
         """set repetition count"""
-        self._count.min = count
-        self._count.max = count
+        self._size.min = count
+        self._size.max = count
 
-    def generate(self):
+    def __iter__(self):
         """Generator which creates random length string with random characters
 
         Yields:
@@ -127,11 +128,11 @@ class CharSetRandomizer(object):
 
         """
         length = len(self._chars)
-        for _ in xrange(self._count.generate):
+        for _ in xrange(self._size.random):
             yield self._chars[random.randrange(length)]
 
     def __str__(self):
-        return '{chars: %s,\n range: %s}' % (self._chars, self._count)
+        return '{chars: %s,\n range: %s}' % (self._chars, self._size)
 
     __repr__ = __str__
 
@@ -145,14 +146,21 @@ class Randomizer(object):
     def __init__(self, charsets):
         self._charsets = charsets
 
-    def generate(self):
+    def __iter__(self):
         """Generator based on CharSetRandomizer object list
 
         Yields:
             Random character
         """
+        def generate(charset):
+            if isinstance(charset, types.GeneratorType):
+                for char in charset:
+                    yield generate(char)
+            else:
+                for char in charset:
+                    yield char
         for charset in self._charsets:
-            for char in charset.generate():
+            for char in generate(charset):
                 yield char
 
 
@@ -286,8 +294,9 @@ class ReGenerator(AbstractGenerator):
         Yields:
             random character
         """
-        for c in Randomizer(self._parser.parseString(self._pattern)).generate():
-            yield c
+        for charset in Randomizer(self._parser.parseString(self._pattern)):
+            for c in charset:
+                yield c
 
     def generate(self):
         """generate random string
