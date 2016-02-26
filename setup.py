@@ -9,7 +9,7 @@ import re
 
 requirements = [i.strip() for i in open("requirements.txt").readlines()]
 
-with open('requests/__init__.py', 'r') as fd:
+with open('simplegenerator/__init__.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 
