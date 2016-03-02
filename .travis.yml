@@ -6,5 +6,7 @@ after_success:
   - codecov
 python:
   - "2.7"
-install: pip install tox-travis
-script: tox
+install:
+  - pip install tox-travis
+script:
+  - tox coverage

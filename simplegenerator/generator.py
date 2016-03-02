@@ -109,7 +109,7 @@ class SimpleGenerator(BaseGenerator):
 
         selectable_characters = []
         if with_lower:
-           selectable_characters.extend(list(alpha_lower))
+            selectable_characters.extend(list(alpha_lower))
         if with_upper:
             selectable_characters.extend(list(alpha_upper))
         if withnumbers:
