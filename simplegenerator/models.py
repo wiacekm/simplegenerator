@@ -17,10 +17,11 @@ Example:
         $ result4 = simple_gen.generate(5)
 
 """
-import yaml
 from abstract import AbstractGenerator
-from regenerator import ReGenerator
 from keys import (RSAKey, ECDSAKey)
+from regenerator import ReGenerator
+import six
+import yaml
 
 __all__ = ['ModelBasedGenerator', 'RegexField', 'StringField']
 
@@ -58,6 +59,7 @@ class ModelMeta(type):
         super(ModelMeta, self).__init__(name, bases, dct)
 
 
+@six.add_metaclass(ModelMeta)
 class ModelBasedGenerator(AbstractGenerator):
     """Model Besed Generator base class.
 
@@ -73,8 +75,6 @@ class ModelBasedGenerator(AbstractGenerator):
     This class is used to create models based on which
     set of random string will be created
     """
-
-    __metaclass__ = ModelMeta
 
     def __init__(self, **kwargs):
         for name, value in kwargs.iteritems():

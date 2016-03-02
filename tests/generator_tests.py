@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import unittest
 from simplegenerator import (alpha_lower, alpha_upper, numbers, space, underscore,
                              minus, special_characters, brackets,
                              SimpleGenerator,
                              )
+import unittest
 
 
 class GeneratorTest(unittest.TestCase):

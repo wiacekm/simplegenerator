@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import unittest
-import mock
 from click.testing import CliRunner
+import mock
 from simplegenerator.__main__ import cli
+import unittest
 
 
 class CliGeneratorTests(unittest.TestCase):
@@ -24,12 +24,12 @@ class CliGeneratorTests(unittest.TestCase):
     def simple_generator_cli_test(self):
         result = self.runner.invoke(cli, ['simple'])
         self.assertEqual(result.exit_code, 0)
-        self.assertEqual(len(result.output), 10+1)  # plus one as new line is counted
+        self.assertEqual(len(result.output), 10 + 1)  # plus one as new line is counted
 
     def pattern_generator_cli_test(self):
         result = self.runner.invoke(cli, ['regex', '--pattern', '[A-Za-z]{5}'])
         self.assertEqual(result.exit_code, 0)
-        self.assertEqual(len(result.output), 5+1)  # plus one as new line is counted
+        self.assertEqual(len(result.output), 5 + 1)  # plus one as new line is counted
 
     def model_definition_from_yaml_file_test(self):
         model_definition = ["---",
@@ -49,5 +49,4 @@ class CliGeneratorTests(unittest.TestCase):
         m = mock.mock_open(read_data='\n'.join(model_definition))
         with mock.patch('simplegenerator.models.open', m):
             result = self.runner.invoke(cli, ['model', '--file', 'test.yml'])
-        print result
         self.assertEqual(result.exit_code, 0)

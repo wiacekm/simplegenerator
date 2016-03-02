@@ -104,12 +104,12 @@ class SimpleGenerator(BaseGenerator):
                     withunderscore, withminus,
                     withspecial_characters, withbrackets]):
             raise ValueError("at least one group should be selected")
-        if not length > 0:
+        elif not length > 0:
             raise ValueError("length should be greater than zero")
 
         selectable_characters = []
         if with_lower:
-            selectable_characters.extend(list(alpha_lower))
+           selectable_characters.extend(list(alpha_lower))
         if with_upper:
             selectable_characters.extend(list(alpha_upper))
         if withnumbers:

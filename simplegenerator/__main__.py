@@ -15,10 +15,10 @@ pgenerate::
     $ python simplegenerator pgenerate --pattern [a-zA-Z]{10}
 
 """
+import click
 import generator
 import models
 import regenerator
-import click
 
 
 @click.group()

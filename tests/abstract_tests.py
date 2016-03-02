@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import unittest
 from simplegenerator import AbstractGenerator
+import unittest
 
 
 class InvalidGenerator(AbstractGenerator):

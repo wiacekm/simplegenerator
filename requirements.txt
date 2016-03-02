@@ -3,3 +3,4 @@ pyparsing==2.0.7
 ecdsa==0.13
 PyYAML==3.11
 pycrypto==2.6.1
+six>=1.10.0

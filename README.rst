@@ -6,6 +6,9 @@ Simple (Password) Generator
 .. image:: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
     :target: http://mit-license.org/
     :alt: License
+.. image:: http://codecov.io/github/michalwiacek/simplegenerator/simplegenerator.svg?branch=master
+    :target: http://codecov.io/github/michalwiacek/simplegenerator?branch=master
+    :alt: Coverage
 
 This is ver simple python tool to generate strings ex. for passwords.
 There are three possible options:

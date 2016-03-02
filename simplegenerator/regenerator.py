@@ -246,8 +246,7 @@ def parser():
         repetition = (
             (lbrace + Word(nums).setResultsName("count") + rbrace) |
             (lbrace + Word(nums).setResultsName("minCount") + "," + Word(nums).setResultsName("maxCount") + rbrace) |
-            oneOf(list("*+?"))
-            )
+            oneOf(list("*+?")))
 
         reRange.setParseAction(handleRange)
         reLiteral.setParseAction(handleLiteral)

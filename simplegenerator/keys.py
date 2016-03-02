@@ -5,10 +5,10 @@ This module containts various methods to create string hashes.
 It is based on python mosules that are already avaialble
 
 """
-import os
+from abstract import AbstractGenerator
 from Crypto.PublicKey import RSA
 import ecdsa
-from abstract import AbstractGenerator
+import os
 
 
 __all__ = ['RSAKey', 'ECDSAKey']

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import unittest
-from simplegenerator import RSAKey
 from simplegenerator import ECDSAKey
+from simplegenerator import RSAKey
+import unittest
 
 
 class PGeneratorTest(unittest.TestCase):
